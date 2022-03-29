@@ -98,21 +98,6 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
             ),
 
-            // Container(
-            //   padding: const EdgeInsets.all(10.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       Text('Forget password?',style: TextStyle(fontSize: 12.0),),
-            //       RaisedButton(
-            //         child: Text('Login'),
-            //         color: Color(0xffEE7B23),
-            //         onPressed: (){},
-            //       ),
-            //     ],
-            //   ),
-            // ),
-
           ],
 
         ),
