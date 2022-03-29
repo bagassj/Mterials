@@ -17,12 +17,13 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: mGraywhite,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
+        body: Padding(
+          padding: kDefaultPadding,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
               'Selamat Datang',
               style: titleText,
             ),
@@ -44,65 +45,122 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 150,
             ),
 
-            Container(
-            width: 350,
-            child: TextField(
-                decoration: InputDecoration( 
-                  enabledBorder: ActiveOutLine,
-                  focusedBorder:PressOutLine,
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Nomor HP atau Email',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 330,
+                  child: TextField(
+                      decoration: InputDecoration( 
+                        enabledBorder: ActiveOutLine,
+                        focusedBorder:PressOutLine,
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Nomor HP atau Email',
+                      ),
+                      autofocus: false,
+                  )
                 ),
-                autofocus: false,
-            )
+              ],
             ),
 
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
 
-            Container(
-            width: 350,
-            child: TextField(
-                decoration: InputDecoration(
-                  enabledBorder: ActiveOutLine,
-                  focusedBorder: PressOutLine,
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Password',
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 330,
+                  child: TextField(
+                      decoration: InputDecoration(
+                        enabledBorder: ActiveOutLine,
+                        focusedBorder: PressOutLine,
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: 'Password',
+                      ),
+                      autofocus: false,
+                  )
                 ),
-                autofocus: false,
-            )
+              ],
             ),
 
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
 
-            Container(
-              alignment: Alignment.center,
-              width: 200,
-              height: 55,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: mBlue,
-              ),
-              child: const Text(
-                'Login',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 35),
+                        child: Text(
+                          'Dont have account?',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 180, 180, 180),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                         child: Row(  
+                           children: [
+                            Container(
+                              child: Text(
+                                'Sign Up',
+                                style: TextStyle(
+                                  color: mBlue,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: 5),
+                              child: Text(
+                                'Here',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 180, 180, 180),
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                           ],
+                         )
+                      )
+                    ],
+                  ),
                 ),
-              ),
+                
+                Container(
+                  width: 150,
+                  height: 50,
+                  child: ElevatedButton(
+                    child: Text('Login'),
+                    onPressed: () {},
+                    
+                    style: ElevatedButton.styleFrom(
+                      primary: mBlue,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100),),
+                      textStyle: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                      )
+                    ),
+                  ),
+                ),
+
+              ],
             ),
-
-          ],
-
+            ],
+          ),
         ),
-
-      ),
     );
   }
 }
