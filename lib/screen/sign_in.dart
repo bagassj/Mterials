@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:project/screen/sign_up.dart';
 import 'package:project/settings.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -23,7 +22,7 @@ class _SignInScreenState extends State<SignInScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+            Text(
               'Selamat Datang',
               style: titleText,
             ),
@@ -88,7 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
 
             SizedBox(
-              height: 20,
+              height: 50,
             ),
 
             Row(
@@ -107,12 +106,20 @@ class _SignInScreenState extends State<SignInScreen> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
+                ),
 
                       Container(
                          child: Row(  
-                           children: [
-                            Container(
+                           children: [                            
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SignUpScreen(),
+                                  ),
+                                );
+                              },
                               child: Text(
                                 'Sign Up',
                                 style: TextStyle(
@@ -121,6 +128,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                 ),
                               ),
                             ),
+                            
                             Container(
                               margin: EdgeInsets.only(left: 5),
                               child: Text(
@@ -140,9 +148,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 
                 Container(
                   width: 150,
-                  height: 50,
+                  height: 55,
                   child: ElevatedButton(
-                    child: Text('Login'),
+                    child: Text('Sign In'),
                     onPressed: () {},
                     
                     style: ElevatedButton.styleFrom(

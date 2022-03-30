@@ -18,7 +18,7 @@ const kDefaultPadding = EdgeInsets.symmetric(horizontal: 30);
 
 // ##################### TEXT STYLE #####################
 TextStyle titleText = TextStyle( 
-      fontSize: 32, 
+      fontSize: 30, 
       fontWeight: FontWeight.bold,
 );
 
