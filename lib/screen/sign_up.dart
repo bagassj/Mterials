@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/screen/sign_in.dart';
 import 'package:project/settings.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -14,6 +15,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: mGraywhite,
+      
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => SignInScreen(),
+              ),
+            );
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Color.fromARGB(255, 180, 180, 180),
+          ),
+        ),
+      ),
+
       body: Padding(
         padding: kDefaultPadding,
         child: Column(
