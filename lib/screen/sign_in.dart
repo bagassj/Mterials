@@ -166,6 +166,18 @@ class _SignInScreenState extends State<SignInScreen> {
 
               ],
             ),
+            
+            Container(
+              margin: EdgeInsets.only(top: 300),
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                'Forget Password',
+                style: TextStyle(
+                  color: mGray,
+                ),
+              ),
+            )
+
             ],
           ),
         ),
