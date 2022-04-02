@@ -21,12 +21,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 0,
         leading: GestureDetector(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SignInScreen(),
-              ),
-            );
+            Navigator.pop(context);
           },
           child: Icon(
             Icons.arrow_back,
