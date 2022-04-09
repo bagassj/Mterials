@@ -36,119 +36,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Selamat Bergabung',
-              style: titleText,
-            ),
-            Text(
-              'di MTerials',
-              style: titleText,
-            ),
-
-            const SizedBox(
-              height: 5,
-            ),
-
-            Text(
-              'Register untuk lanjut',
-              style: subTitle,
+            Wrap(
+              children: [
+                Text(
+                  'Selamat Bergabung di MTerials',
+                  style: titleText,
+                ),
+                
+                const SizedBox(
+                  height: 5,
+                ),
+    
+                Text(
+                  'Register untuk lanjut',
+                  style: subTitle,
+                ),
+              ],
             ),
 
             const SizedBox(
               height: 50,
             ),
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 330,
-                  child: TextField(
-                      decoration: InputDecoration( 
-                        enabledBorder: ActiveOutLine,
-                        focusedBorder:PressOutLine,
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Email',
-                      ),
-                      autofocus: false,
-                  )
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 330,
-                  child: TextField(
-                      decoration: InputDecoration( 
-                        enabledBorder: ActiveOutLine,
-                        focusedBorder:PressOutLine,
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Nomor HP',
-                      ),
-                      autofocus: false,
-                  )
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 330,
-                  child: TextField(
-                      decoration: InputDecoration( 
-                        enabledBorder: ActiveOutLine,
-                        focusedBorder:PressOutLine,
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Password',
-                      ),
-                      autofocus: false,
-                  )
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 330,
-                  child: TextField(
-                      decoration: InputDecoration( 
-                        enabledBorder: ActiveOutLine,
-                        focusedBorder:PressOutLine,
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Masukkan Ulang Password',
-                      ),
-                      autofocus: false,
-                  )
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: 50,
-            ),
+            FormMethod(20,'Email'),
+            FormMethod(20,'Nomor Hp'),
+            FormMethod(20,'Password'),
+            FormMethod(50,'Masukkan Ulang Password'),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -178,5 +91,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
         
     );
+  }
+
+  Row FormMethod(MarginBottom,TextValue) {
+    return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 330,
+                margin: EdgeInsets.only(bottom: MarginBottom),
+                child: TextField(
+                    decoration: InputDecoration( 
+                      enabledBorder: ActiveOutLine,
+                      focusedBorder:PressOutLine,
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: TextValue,
+                    ),
+                    autofocus: false,
+                )
+              ),
+            ],
+          );
   }
 }

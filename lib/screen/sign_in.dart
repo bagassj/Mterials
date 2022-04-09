@@ -22,73 +22,26 @@ class _SignInScreenState extends State<SignInScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            Text(
-              'Selamat Datang',
-              style: titleText,
-            ),
-            Text(
-              'Kembali',
-              style: titleText,
-            ),
-
-            const SizedBox(
-              height: 5,
-            ),
-
-            Text(
-              'Login untuk lanjut',
-              style: subTitle,
-            ),
-
-            const SizedBox(
-              height: 150,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
               children: [
-                Container(
-                  width: 330,
-                  child: TextField(
-                      decoration: InputDecoration( 
-                        enabledBorder: ActiveOutLine,
-                        focusedBorder:PressOutLine,
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Nomor HP atau Email',
-                      ),
-                      autofocus: false,
-                  )
+                Text(
+                  'Selamat Datang Kembali',
+                  style: titleText,
+                ),
+
+                const SizedBox(
+                  height: 5,
+                ),
+
+                Text(
+                  'Login untuk lanjut',
+                  style: subTitle,
                 ),
               ],
             ),
 
-            SizedBox(
-              height: 20,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 330,
-                  child: TextField(
-                      decoration: InputDecoration(
-                        enabledBorder: ActiveOutLine,
-                        focusedBorder: PressOutLine,
-                        filled: true,
-                        fillColor: Colors.white,
-                        hintText: 'Password',
-                      ),
-                      autofocus: false,
-                  )
-                ),
-              ],
-            ),
-
-            SizedBox(
-              height: 50,
-            ),
+            FormMethod(150,0,'Nomor Hp atau Email'),           
+            FormMethod(20,50,'Password'),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -182,5 +135,27 @@ class _SignInScreenState extends State<SignInScreen> {
           ),
         ),
     );
+  }
+
+  Row FormMethod(MarginTop, MarginBottom, TextValue) {
+    return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 330,
+                margin: EdgeInsets.only(top: MarginTop, bottom: MarginBottom),
+                child: TextField(
+                    decoration: InputDecoration( 
+                      enabledBorder: ActiveOutLine,
+                      focusedBorder:PressOutLine,
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: TextValue,
+                    ),
+                    autofocus: false,
+                )
+              ),
+            ],
+          );
   }
 }
