@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:project/screen/sign_in.dart';
+import 'package:project/screen/main.dart';
 import 'package:project/settings.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({ Key? key }) : super(key: key);
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -15,7 +16,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: mGraywhite,
-      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -29,7 +29,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
         ),
       ),
-
       body: Padding(
         padding: kDefaultPadding,
         child: Column(
@@ -42,27 +41,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   'Selamat Bergabung di MTerials',
                   style: titleText,
                 ),
-                
                 const SizedBox(
                   height: 5,
                 ),
-    
                 Text(
                   'Register untuk lanjut',
                   style: subTitle,
                 ),
               ],
             ),
-
             const SizedBox(
               height: 50,
             ),
-
-            FormMethod(20,'Email'),
-            FormMethod(20,'Nomor Hp'),
-            FormMethod(20,'Password'),
-            FormMethod(50,'Masukkan Ulang Password'),
-
+            FormMethod(20, 'Email'),
+            FormMethod(20, 'Nomor Hp'),
+            FormMethod(20, 'Password'),
+            FormMethod(50, 'Masukkan Ulang Password'),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -71,47 +65,49 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   height: 55,
                   child: ElevatedButton(
                     child: Text('Sign Up'),
-                    onPressed: () {},
-                    
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Main(),
+                        ),
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
-                      primary: mBlue,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100),),
-                      textStyle: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                      )
-                    ),
+                        primary: mBlue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        textStyle: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
                 ),
               ],
             )
-
           ],
         ),
       ),
-        
     );
   }
 
-  Row FormMethod(MarginBottom,TextValue) {
+  Row FormMethod(MarginBottom, TextValue) {
     return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 330,
-                margin: EdgeInsets.only(bottom: MarginBottom),
-                child: TextField(
-                    decoration: InputDecoration( 
-                      enabledBorder: ActiveOutLine,
-                      focusedBorder:PressOutLine,
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: TextValue,
-                    ),
-                    autofocus: false,
-                )
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+            width: 330,
+            margin: EdgeInsets.only(bottom: MarginBottom),
+            child: TextField(
+              decoration: InputDecoration(
+                enabledBorder: ActiveOutLine,
+                focusedBorder: PressOutLine,
+                filled: true,
+                fillColor: Colors.white,
+                hintText: TextValue,
               ),
-            ],
-          );
+              autofocus: false,
+            )),
+      ],
+    );
   }
 }

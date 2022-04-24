@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project/screen/sign_in.dart';
 import 'package:project/screen/splash.dart';
 
 void main() {
@@ -15,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Montserrat'),
-      home: SignInScreen(),
+      home: SplashScreen(),
     );
   }
 }
