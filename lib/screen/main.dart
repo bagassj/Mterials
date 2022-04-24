@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project/screen/home.dart';
 import 'package:project/screen/history.dart';
-// import 'package:project/settings.dart';
+import 'package:project/screen/favorite.dart';
+import 'package:project/screen/profile.dart';
+import 'package:project/settings.dart';
 
 class Main extends StatefulWidget {
   const Main({Key? key}) : super(key: key);
@@ -11,52 +13,105 @@ class Main extends StatefulWidget {
 }
 
 class _MainState extends State<Main> {
-  int pageIndex = 1;
+  int pageIndex = 0;
 
   final pages = [
     const HomeScreen(),
     const HistoryScreen(),
+    const FavoriteScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pages[pageIndex],
+      backgroundColor: pageIndex == 0 ? mBlue : mGraywhite,
+      body: Container(
+        width: double.infinity,
+        child: pages[pageIndex],
+      ),
       bottomNavigationBar: Container(
         height: 60,
         decoration: BoxDecoration(
-          color: Theme.of(context).primaryColor,
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
+          color: mGraywhite,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.3),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BotNavIcon(0, Icons.home, 'Home'),
-            BotNavIcon(1, Icons.history, 'History'),
-            // BotNavIcon('2', Icons.favorite, 'Favorite'),
-            // BotNavIcon('3', Icons.person, 'Profile'),
+            pageIndex == 0
+                ? BotNavIcon(0, Icons.home, 'Home', mBlue)
+                : BotNavIcon(0, Icons.home, 'Home', mGray),
+            pageIndex == 1
+                ? BotNavIcon(1, Icons.history, 'History', mBlue)
+                : BotNavIcon(1, Icons.history, 'History', mGray),
+            pageIndex == 2
+                ? BotNavIcon(2, Icons.favorite, 'Favorite', mBlue)
+                : BotNavIcon(2, Icons.favorite, 'Favorite', mGray),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => ProfileScreen()));
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.person,
+                    color: mGray,
+                  ),
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 12,
+                      color: mGray,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  IconButton BotNavIcon(
+  GestureDetector BotNavIcon(
     index,
     IconData icon,
     text,
+    color,
   ) {
-    return IconButton(
-      enableFeedback: false,
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         setState(() {
           pageIndex = index;
         });
       },
-      icon: Icon(icon),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            icon,
+            color: color,
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              fontFamily: 'Montserrat',
+              fontSize: 12,
+              color: color,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

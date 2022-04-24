@@ -1,27 +1,15 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
-// import 'package:project/screen/home.dart';
 import 'package:project/settings.dart';
 
-class HistoryScreen extends StatefulWidget {
-  const HistoryScreen({Key? key}) : super(key: key);
+class FavoriteScreen extends StatefulWidget {
+  const FavoriteScreen({Key? key}) : super(key: key);
 
   @override
-  State<HistoryScreen> createState() => _HistoryScreenState();
+  State<FavoriteScreen> createState() => _FavoriteScreenState();
 }
 
-class _HistoryScreenState extends State<HistoryScreen> {
-  // late int index;
-  // List showPage = [
-  //   HomeScreen()
-  // ];
-
-  // @override
-  // void initState() {
-  //   index = 0;
-  //   super.initState();
-  // }
-
+class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -38,7 +26,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   alignment: Alignment.center,
                   margin: EdgeInsets.only(top: 30),
                   child: Text(
-                    'My History',
+                    'My Favorite',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                 ),
@@ -161,16 +149,24 @@ class _HistoryScreenState extends State<HistoryScreen> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
+                  margin: EdgeInsets.only(bottom: 15),
+                  height: 30,
+                  width: 30,
+                  child: Icon(
+                    Icons.favorite,
+                    color: mRed,
+                  ),
+                ),
+                Container(
                   alignment: Alignment.center,
                   height: 25,
                   width: 80,
+                  decoration: BoxDecoration(
+                      color: mGreen, borderRadius: BorderRadius.circular(5)),
                   child: Text(
-                    '12 Juli 2021',
+                    'Add +',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black12,
-                      fontSize: 10,
-                    ),
+                        fontWeight: FontWeight.bold, color: Colors.white),
                   ),
                 ),
               ],
@@ -178,6 +174,16 @@ class _HistoryScreenState extends State<HistoryScreen> {
           )
         ],
       ),
+    );
+  }
+
+  BottomNavigationBarItem Test(
+    IconData icon,
+    text,
+  ) {
+    return BottomNavigationBarItem(
+      icon: Icon(icon),
+      label: text,
     );
   }
 }
