@@ -18,6 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: 200,
+              width: MediaQuery.of(context).size.width,
+              color: mBlue,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
