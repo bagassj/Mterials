@@ -1,6 +1,8 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:project/settings.dart';
+import 'package:project/dialog/buyDialog.dart';
+import 'package:project/dialog/cartDialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -75,16 +77,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderSide: BorderSide.none)),
                           ),
                         ),
-                        Container(
-                          width: 60,
-                          height: 60,
-                          margin:
-                              EdgeInsets.only(top: 30, bottom: 10, left: 100),
-                          child: Icon(
-                            Icons.shopping_cart,
-                            size: 40,
+                        GestureDetector(
+                          onTap: (() {
+                            showDialog(
+                              context: context,
+                              builder: (ctxt) => new cartDialog(),
+                            );
+                          }),
+                          child: Container(
+                            width: 28,
+                            height: 28,
+                            margin:
+                                EdgeInsets.only(top: 30, bottom: 10, left: 100),
+                            child: Icon(
+                              Icons.shopping_cart,
+                              size: 28,
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ),
@@ -184,36 +194,44 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            height: 70,
-            width: 80,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  margin: EdgeInsets.only(bottom: 15),
-                  height: 30,
-                  width: 30,
-                  child: Icon(
-                    Icons.favorite,
-                    color: mGray,
+          GestureDetector(
+            onTap: (() {
+              showDialog(
+                context: context,
+                builder: (ctxt) => new buyDialog(),
+              );
+            }),
+            child: Container(
+              height: 70,
+              width: 80,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(bottom: 15),
+                    height: 30,
+                    width: 30,
+                    child: Icon(
+                      Icons.favorite,
+                      color: mGray,
+                    ),
                   ),
-                ),
-                Container(
-                  alignment: Alignment.center,
-                  height: 25,
-                  width: 80,
-                  decoration: BoxDecoration(
-                      color: mGreen, borderRadius: BorderRadius.circular(5)),
-                  child: Text(
-                    'Add +',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 25,
+                    width: 80,
+                    decoration: BoxDecoration(
+                        color: mGreen, borderRadius: BorderRadius.circular(5)),
+                    child: Text(
+                      'Add +',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

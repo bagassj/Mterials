@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project/settings.dart';
+import 'package:project/dialog/deleteDialog.dart';
+import 'package:project/screen/sign_in.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -97,7 +99,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Expanded(
-              flex: 8,
+              flex: 7,
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -122,12 +124,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Menu('History'),
                       Menu('Change Language'),
                       Menu('About'),
-                      Menu('Delete Account'),
+                      GestureDetector(
+                        onTap: () => showDialog(
+                            context: context,
+                            builder: (ctxt) => new deleteDialog()),
+                        child: Menu('Delete Account'),
+                      )
                     ],
                   ),
                 ),
               ),
             ),
+            Expanded(
+              flex: 1,
+              child: Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(color: mGraywhite),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInScreen()));
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.logout,
+                          size: 18,
+                          color: mGray,
+                        ),
+                        Text(
+                          'Logout',
+                          style: TextStyle(fontSize: 12, color: mGray),
+                        ),
+                      ],
+                    ),
+                  )),
+            )
           ],
         ),
       ),

@@ -5,14 +5,14 @@ import 'package:project/screen/favorite.dart';
 import 'package:project/screen/profile.dart';
 import 'package:project/settings.dart';
 
-class Main extends StatefulWidget {
-  const Main({Key? key}) : super(key: key);
+class mainApp extends StatefulWidget {
+  const mainApp({Key? key}) : super(key: key);
 
   @override
-  State<Main> createState() => _MainState();
+  State<mainApp> createState() => _mainAppState();
 }
 
-class _MainState extends State<Main> {
+class _mainAppState extends State<mainApp> {
   int pageIndex = 0;
 
   final pages = [

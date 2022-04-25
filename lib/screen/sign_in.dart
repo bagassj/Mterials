@@ -100,7 +100,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Main(),
+                          builder: (context) => mainApp(),
                         ),
                       );
                     },

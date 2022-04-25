@@ -52,11 +52,12 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     onChanged: print,
                     selectedItem: "All",
                     dropdownSearchDecoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(3),
-                            borderSide: BorderSide.none)),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(3),
+                          borderSide: BorderSide.none),
+                    ),
                   ),
                 ),
               ],
