@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/screen/editprofile.dart';
 import 'package:project/settings.dart';
 import 'package:project/dialog/deleteDialog.dart';
 import 'package:project/screen/sign_in.dart';
@@ -90,10 +91,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ],
                     ),
                     SizedBox(width: 30),
-                    Icon(
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditProfileScreen(),
+                          ),
+                        );
+                      },
+                      child: Icon(
                       Icons.edit,
                       color: Colors.white,
-                    )
+                    ),
+                    ),
+                    
                   ],
                 ),
               ),
