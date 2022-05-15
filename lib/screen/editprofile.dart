@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:project/screen/camera.dart';
 import 'package:project/settings.dart';
 
 class EditProfileScreen extends StatefulWidget {
+  
   const EditProfileScreen({ Key? key }) : super(key: key);
 
   @override
   State<EditProfileScreen> createState() => _EditProfileScreenState();
+  
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
@@ -34,23 +37,15 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           ),
         ),
         actions: [
-          TextButton.icon(
-            onPressed: () {}, 
-            icon: Icon(
-              Icons.save,
-              color: mGreen,
-            ), 
-            label: Text(
-              'Save',
-              style: TextStyle(
-                color: mGreen,
-                fontWeight: FontWeight.bold,
-                fontSize: 16
-              ),
-            )
+          Container(
+            margin: EdgeInsets.only(right: 10.0),
+            child: TextButton(
+              onPressed: (){}, 
+              child: Image.asset('assets/save.png')),
           )
         ],
       ),
+
 
       body: Center(
         child: Column(
@@ -61,19 +56,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               margin: EdgeInsets.only(top: 20),
               child: Row(
                 children: [
-                  Container(
-                    width: 80,
-                    height: 80,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Color.fromARGB(113, 0, 0, 0),            
-                    ),
-                    child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                      size: 30,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CameraScreen(),
+                        ),
+                      );
+                    },
+
+                    child: Container(
+                      width: 80,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: Color.fromARGB(113, 0, 0, 0),            
+                      ),
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
+                  
 
                   Container(
                     width: 230,
@@ -93,45 +100,69 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               child: Text('Edit Profile'),
             ),
 
-            textField(80,'Nama'),
-            textField(30,'Nomor HP'),
-            textField(30,'Email'),
+            customFieldEdit(
+              labelText: 'Nama',
+              top: 80,
+            ),
+
+            customFieldEdit(
+              labelText: 'Nomor HP',
+              top: 30,
+            ),
+
+            customFieldEdit(
+              labelText: 'Email',
+              top: 30,
+            ),
           ],
         ),
       ),
     );
   }
+}
 
-  Container textField(top, label) {
+class customFieldEdit extends StatelessWidget{
+  final String labelText;
+  final double top;
+
+  const customFieldEdit({
+    required this.labelText, 
+    required this.top,
+  });
+
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-            width: 350,
-            margin: EdgeInsets.only(top: top),
-            child: Column(
-             children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: [
-                      Text(
-                        label,
-                        style: TextStyle(
-                          color: Color.fromARGB(170, 0, 0, 0)
+              width: 350,
+              margin: EdgeInsets.only(top: top),
+              child: Column(
+               children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Row(
+                      children: [
+                        Text(
+                          labelText,
+                          style: TextStyle(
+                            color: Color.fromARGB(170, 0, 0, 0)
+                          ),
                         ),
-                      ),
-                      Text(
-                        '*',
-                        style: TextStyle(
-                          color: Colors.red
-                        ),
-                      )
-                    ],
+                        Text(
+                          '*',
+                          style: TextStyle(
+                            color: Colors.red
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                TextFormField(
-                  autofocus: false,
-                )
-             ], 
-            ),
-          );
+                  TextFormField(
+                    autofocus: false,
+                  )
+               ], 
+              ),
+            );
   }
+
 }

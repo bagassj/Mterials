@@ -30,6 +30,7 @@ dependencies:
   flutter:
     sdk: flutter
   dropdown_search: ^2.0.1
+  camera: ^0.9.5
 
 
   # The following adds the Cupertino Icons font to your application.
