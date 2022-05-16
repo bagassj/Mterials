@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project/screen/editprofile.dart';
+import 'package:project/screen/address.dart';
 import 'package:project/settings.dart';
 import 'package:project/dialog/deleteDialog.dart';
 import 'package:project/screen/sign_in.dart';
@@ -101,11 +102,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         );
                       },
                       child: Icon(
-                      Icons.edit,
-                      color: Colors.white,
+                        Icons.edit,
+                        color: Colors.white,
+                      ),
                     ),
-                    ),
-                    
                   ],
                 ),
               ),
@@ -132,7 +132,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(
                         height: 40,
                       ),
-                      Menu('Address Setting'),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Address(),
+                            ),
+                          );
+                        },
+                        child: Menu('Address Setting'),
+                      ),
                       Menu('History'),
                       Menu('Change Language'),
                       Menu('About'),

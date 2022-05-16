@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project/screen/main.dart';
+import 'package:project/screen/splash.dart';
 // import 'package:project/screen/profile.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'Montserrat'),
-      home: mainApp(),
+      home: SplashScreen(),
     );
   }
 }
