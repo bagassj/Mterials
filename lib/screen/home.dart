@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project/settings.dart';
 import 'package:project/dialog/buyDialog.dart';
 import 'package:project/dialog/cartDialog.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  CollectionReference items = FirebaseFirestore.instance.collection('items');
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -64,8 +68,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 30,
                             bottom: 10,
                           ),
-                          child: DropdownSearch<String>(
-                            items: ["All", "Semen", "Cat", "Kayu", 'Paku'],
+                          child:
+                              // StreamBuilder<QuerySnapshot>(
+                              //   stream: categories,
+                              //   builder: (BuildContext context,
+                              //       AsyncSnapshot<QuerySnapshot> snapshot) {
+                              //     if (snapshot.hasError) {
+                              //       return Text('Error');
+                              //     }
+                              //   },
+                              // ),
+                              DropdownSearch<String>(
+                            items: ["Semen", "Paku"],
                             mode: Mode.MENU,
                             onChanged: print,
                             selectedItem: "All",
@@ -98,33 +112,84 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  // StreamBuilder<QuerySnapshot>(
+                  //   stream: items,
+                  //   builder: (BuildContext context,
+                  //       AsyncSnapshot<QuerySnapshot> snapshot) {
+                  //     if (snapshot.hasError) {
+                  //       return Text('Error');
+                  //     }
+
+                  //     final data = snapshot.requireData;
+
+                  //     return ListView.builder(
+                  //       itemCount: data.size,
+                  //       itemBuilder: (context, index) {
+                  //         return BoxCard(
+                  //           '${data.docs[index]['img']}',
+                  //           '${data.docs[index]['name']}',
+                  //           '${data.docs[index]['price']}',
+                  //           '${data.docs[index]['stock']}',
+                  //         );
+                  //       },
+                  //     );
+                  //   },
+                  // ),
                   Wrap(
                     alignment: WrapAlignment.center,
                     children: [
-                      BoxCard(
-                        'assets/Semen.png',
-                        'Semen Tiga Roda',
-                        'Stock 10',
-                        '150.000',
+                      FutureBuilder<DocumentSnapshot>(
+                        future: items.doc().get(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<DocumentSnapshot> snapshot) {
+                          Map<String, dynamic> data =
+                              snapshot.data!.data() as Map<String, dynamic>;
+                          return BoxCard(
+                            '${data['img']}',
+                            '${data['name']}',
+                            '${data['price']}',
+                            '${data['stock']}',
+                          );
+                        },
+                        // builder: (BuildContext context,
+                        //     AsyncSnapshot<QuerySnapshot> snapshot) {
+                        //   if (snapshot.hasError) {
+                        //     return Text('Error');
+                        //   }
+
+                        //   final data = snapshot.requireData;
+
+                        //   return ListView.builder(
+                        //     itemCount: data.size,
+                        //     itemBuilder: (context, index) {
+                        //       return BoxCard(
+                        //         '${data.docs[index]['img']}',
+                        //         '${data.docs[index]['name']}',
+                        //         '${data.docs[index]['price']}',
+                        //         '${data.docs[index]['stock']}',
+                        //       );
+                        //     },
+                        //   );
+                        // },
                       ),
-                      BoxCard(
-                        'assets/Holcim.png',
-                        'Semen Holcim',
-                        'Stock 5',
-                        '120.000',
-                      ),
-                      BoxCard(
-                        'assets/Gresik.png',
-                        'Semen Gresik',
-                        'Stock 15',
-                        '145.000',
-                      ),
-                      BoxCard(
-                        'assets/Padang.png',
-                        'Semen Padang',
-                        'Stock 0',
-                        '115.000',
-                      ),
+                      // BoxCard(
+                      //   'assets/Holcim.png',
+                      //   'Semen Holcim',
+                      //   'Stock 5',
+                      //   '120.000',
+                      // ),
+                      // BoxCard(
+                      //   'assets/Gresik.png',
+                      //   'Semen Gresik',
+                      //   'Stock 15',
+                      //   '145.000',
+                      // ),
+                      // BoxCard(
+                      //   'assets/Padang.png',
+                      //   'Semen Padang',
+                      //   'Stock 0',
+                      //   '115.000',
+                      // ),
                     ],
                   ),
                 ],
