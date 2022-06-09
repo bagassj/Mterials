@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "90538077176",
+    "project_id": "mterials-f669d",
+    "storage_bucket": "mterials-f669d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90538077176:android:0fbd4796e0cb2cd26c840d",
+        "android_client_info": {
+          "package_name": "com.example.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90538077176-9arfb43q4oijni6r68e1q5dc2c7fh51m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI0VJNBU7zIUAMq7w5v6x-WOp40no_Q8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90538077176-9arfb43q4oijni6r68e1q5dc2c7fh51m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

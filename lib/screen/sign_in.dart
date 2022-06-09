@@ -4,7 +4,7 @@ import 'package:project/screen/sign_up.dart';
 import 'package:project/settings.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({ Key? key }) : super(key: key);
+  const SignInScreen({Key? key}) : super(key: key);
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -48,7 +48,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
-
             Expanded(
               flex: 3,
               child: Form(
@@ -70,7 +69,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         return null;
                       },
                     ),
-
                     formInput(
                       marginTop: 20,
                       marginButton: 0,
@@ -90,101 +88,105 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
-
             Expanded(
-              flex: 4,
-              child: Padding(
-                padding: kDefaultPadding,
-                child: Container(
-                  width: double.infinity,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 150,
-                        child: Column(
-                          children: [
-                            Text(
-                              'Dont have account?',
-                              style: TextStyle(
-                                color: Color.fromARGB(255, 180, 180, 180),
-                                fontWeight: FontWeight.w600,
+                flex: 4,
+                child: Padding(
+                  padding: kDefaultPadding,
+                  child: Container(
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 150,
+                          child: Column(
+                            children: [
+                              Text(
+                                'Dont have account?',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 180, 180, 180),
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SignUpScreen(),
+                              Row(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SignUpScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: Text(
+                                      'Sign Up',
+                                      style: TextStyle(
+                                        color: mBlue,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'Sign Up',
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    'Here',
                                     style: TextStyle(
-                                      color: mBlue,
+                                      color: Color.fromARGB(255, 180, 180, 180),
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                ),
-                                SizedBox(width: 5,),
-                                Text(
-                                  'Here',
-                                  style: TextStyle(
-                                    color: Color.fromARGB(255, 180, 180, 180),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: 150,
-                              height: 55,
-                              child: ElevatedButton(
-                                child: Text('Sign In'),
-                                onPressed: () {
-                                  if (formkey.currentState != null) {
-                                    if (formkey.currentState!.validate()) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text('Berhasil Sign In')));
-                                      Future.delayed(Duration(seconds: 1), () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(builder: (_) {
-                                          return mainApp();
-                                        }));
-                                      });
-                                    } else {
-                                      print('ada inputan belum valid');
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                width: 150,
+                                height: 55,
+                                child: ElevatedButton(
+                                  child: Text('Sign In'),
+                                  onPressed: () {
+                                    if (formkey.currentState != null) {
+                                      if (formkey.currentState!.validate()) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content:
+                                                    Text('Berhasil Sign In')));
+                                        Future.delayed(Duration(seconds: 1),
+                                            () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(builder: (_) {
+                                            return mainApp();
+                                          }));
+                                        });
+                                      } else {
+                                        print('ada inputan belum valid');
+                                      }
                                     }
-                                  }
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    primary: mBlue,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                    ),
-                                    textStyle: TextStyle(
-                                        fontSize: 18, fontWeight: FontWeight.bold)),
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      primary: mBlue,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(100),
+                                      ),
+                                      textStyle: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold)),
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ],
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                ),
-              )
-            ),
-
+                )),
             Expanded(
               flex: 1,
               child: Container(
@@ -218,10 +220,10 @@ class formInput extends StatelessWidget {
   final String? Function(String?)? checkValidator;
 
   const formInput({
-    required this.textValue, 
-    required this.obscureText, 
+    required this.textValue,
+    required this.obscureText,
     required this.marginTop,
-    required this.marginButton,  
+    required this.marginButton,
     this.checkValidator,
   });
 
@@ -230,27 +232,22 @@ class formInput extends StatelessWidget {
     return Padding(
       padding: kDefaultPadding,
       child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(top: marginTop, bottom: marginButton),
-        child: TextFormField(
-          key: GlobalKey<FormState>(),
-          controller: TextEditingController(),
-  
-          decoration: InputDecoration(
-            enabledBorder: ActiveOutLine,
-            focusedBorder: PressOutLine,
-            filled: true,
-            fillColor: Colors.white,
-            hintText: textValue,
-          ),
-          autofocus: false,
-          obscureText: obscureText,
-          validator: checkValidator,
-        )
-      ),
-      
-      
+          width: double.infinity,
+          margin: EdgeInsets.only(top: marginTop, bottom: marginButton),
+          child: TextFormField(
+            key: GlobalKey<FormState>(),
+            controller: TextEditingController(),
+            decoration: InputDecoration(
+              enabledBorder: ActiveOutLine,
+              focusedBorder: PressOutLine,
+              filled: true,
+              fillColor: Colors.white,
+              hintText: textValue,
+            ),
+            autofocus: false,
+            obscureText: obscureText,
+            validator: checkValidator,
+          )),
     );
   }
-  
 }
