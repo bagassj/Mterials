@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:project/screen/main.dart';
+import 'package:project/authServices.dart';
 import 'package:project/screen/sign_up.dart';
 import 'package:project/settings.dart';
 
+
+
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  const SignInScreen({ Key? key }) : super(key: key);
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -12,6 +14,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   var formkey = GlobalKey<FormState>();
+  AuthServices authServices = AuthServices();
 
   @override
   Widget build(BuildContext context) {
@@ -48,145 +51,140 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
+
             Expanded(
               flex: 3,
               child: Form(
                 key: formkey,
                 child: Column(
                   children: [
-                    formInput(
-                      marginTop: 0,
-                      marginButton: 0,
-                      textValue: 'Nomor Hp atau Email',
-                      obscureText: false,
-                      checkValidator: (val) {
-                        if (val == null) {
-                          return 'tidak boleh kosong';
-                        }
-                        if (val.length < 3) {
-                          return 'Minimal 3 karakter';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 0.0, bottom: 0.0),
+                        child: TextFormField(
+                          controller: authServices.email,
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'nomot Hp atau Email',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
                     ),
-                    formInput(
-                      marginTop: 20,
-                      marginButton: 0,
-                      textValue: 'Password',
-                      obscureText: true,
-                      checkValidator: (val) {
-                        if (val == null) {
-                          return 'password harus diisi';
-                        }
-                        if (val.length < 6) {
-                          return 'password minimal 6 karakter';
-                        }
-                        return null;
-                      },
+
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                        child: TextFormField(
+                          controller: authServices.password,
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Password',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
                     ),
                   ],
                 ),
               ),
             ),
+
             Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: kDefaultPadding,
-                  child: Container(
-                    width: double.infinity,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 150,
-                          child: Column(
-                            children: [
-                              Text(
-                                'Dont have account?',
-                                style: TextStyle(
-                                  color: Color.fromARGB(255, 180, 180, 180),
-                                  fontWeight: FontWeight.w600,
-                                ),
+              flex: 4,
+              child: Padding(
+                padding: kDefaultPadding,
+                child: Container(
+                  width: double.infinity,
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 150,
+                        child: Column(
+                          children: [
+                            Text(
+                              'Dont have account?',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 180, 180, 180),
+                                fontWeight: FontWeight.w600,
                               ),
-                              Row(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => SignUpScreen(),
-                                        ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Sign Up',
-                                      style: TextStyle(
-                                        color: mBlue,
-                                        fontWeight: FontWeight.w600,
+                            ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignUpScreen(),
                                       ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    'Here',
+                                    );
+                                  },
+                                  child: Text(
+                                    'Sign Up',
                                     style: TextStyle(
-                                      color: Color.fromARGB(255, 180, 180, 180),
+                                      color: mBlue,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 55,
-                                child: ElevatedButton(
-                                  child: Text('Sign In'),
-                                  onPressed: () {
-                                    if (formkey.currentState != null) {
-                                      if (formkey.currentState!.validate()) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                                content:
-                                                    Text('Berhasil Sign In')));
-                                        Future.delayed(Duration(seconds: 1),
-                                            () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(builder: (_) {
-                                            return mainApp();
-                                          }));
-                                        });
-                                      } else {
-                                        print('ada inputan belum valid');
-                                      }
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      primary: mBlue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                      ),
-                                      textStyle: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold)),
                                 ),
+                                SizedBox(width: 5,),
+                                Text(
+                                  'Here',
+                                  style: TextStyle(
+                                    color: Color.fromARGB(255, 180, 180, 180),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              width: 150,
+                              height: 55,
+                              child: ElevatedButton(
+                                child: Text('Sign In'),
+                                onPressed: () {
+                                  if(authServices.email != "" && authServices.password != "" ){
+                                    authServices.signIn(context);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: mBlue,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                    ),
+                                    textStyle: TextStyle(
+                                        fontSize: 18, fontWeight: FontWeight.bold)),
                               ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                )),
+                ),
+              )
+            ),
+
             Expanded(
               flex: 1,
               child: Container(
@@ -212,42 +210,3 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 }
 
-class formInput extends StatelessWidget {
-  final String textValue;
-  final bool obscureText;
-  final double marginTop;
-  final double marginButton;
-  final String? Function(String?)? checkValidator;
-
-  const formInput({
-    required this.textValue,
-    required this.obscureText,
-    required this.marginTop,
-    required this.marginButton,
-    this.checkValidator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: kDefaultPadding,
-      child: Container(
-          width: double.infinity,
-          margin: EdgeInsets.only(top: marginTop, bottom: marginButton),
-          child: TextFormField(
-            key: GlobalKey<FormState>(),
-            controller: TextEditingController(),
-            decoration: InputDecoration(
-              enabledBorder: ActiveOutLine,
-              focusedBorder: PressOutLine,
-              filled: true,
-              fillColor: Colors.white,
-              hintText: textValue,
-            ),
-            autofocus: false,
-            obscureText: obscureText,
-            validator: checkValidator,
-          )),
-    );
-  }
-}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project/authServices.dart';
 import 'package:project/screen/editprofile.dart';
 import 'package:project/screen/address.dart';
 import 'package:project/settings.dart';
@@ -6,10 +7,12 @@ import 'package:project/dialog/deleteDialog.dart';
 import 'package:project/screen/sign_in.dart';
 
 class ProfileScreen extends StatefulWidget {
+  
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
+  
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -164,10 +167,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   decoration: BoxDecoration(color: mGraywhite),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SignInScreen()));
+                      AuthServices authServices = AuthServices();
+                      authServices.logOut(context);
+                      // Navigator.push(    
+                      //     context,
+                          
+                      //     MaterialPageRoute(
+                      //         builder: (context) => SignInScreen()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

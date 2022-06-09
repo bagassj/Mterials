@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:project/screen/main.dart';
+import 'package:project/authServices.dart';
 import 'package:project/settings.dart';
+
+
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -11,6 +14,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   var formkey = GlobalKey<FormState>();
+  AuthServices authServices = AuthServices();
 
   @override
   Widget build(BuildContext context) {
@@ -63,68 +67,82 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 key: formkey,
                 child: Column(
                   children: [
-                    formInput(
-                      marginTop: 0,
-                      marginButton: 20,
-                      textValue: 'Email',
-                      obscureText: false,
-                      checkValidator: (val) {
-                        if (val == null) {
-                          return 'Tidak Boleh Kosong';
-                        }
-                        if (val.length < 3) {
-                          return 'Minimal 3 karakter';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 0.0, bottom: 20.0),
+                        child: TextFormField(
+                          controller: authServices.email,
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Email',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
                     ),
 
-                    formInput(
-                      marginTop: 0,
-                      marginButton: 20,
-                      textValue: 'Nomor Hp',
-                      obscureText: false,
-                      checkValidator: (val) {
-                        if (val == null) {
-                          return 'Tidak Boleh Kosong';
-                        }
-                        if (val.length != String) {
-                          return 'Harus Angka';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 0.0, bottom: 20.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Nomor Hp',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
                     ),
 
-                    formInput(
-                      marginTop: 0,
-                      marginButton: 20,
-                      textValue: 'Password',
-                      obscureText: true,
-                      checkValidator: (val) {
-                        if (val == null) {
-                          return 'Tidak Boleh Kosong';
-                        }
-                        if (val.length < 3) {
-                          return 'Minimal 3 karakter';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 0.0, bottom: 20.0),
+                        child: TextFormField(
+                          controller: authServices.password,
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Password',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
                     ),
 
-                    formInput(
-                      marginTop: 0,
-                      marginButton: 0,
-                      textValue: 'Masukkan Ulang Password',
-                      obscureText: true,
-                      checkValidator: (val) {
-                        if (val == null) {
-                          return 'Tidak Boleh Kosong';
-                        }
-                        if (val.length < 3) {
-                          return 'Minimal 3 karakter';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 0.0, bottom: 0.0),
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Masukkan Ulang Password',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
                     ),
                   ],
                 )
@@ -140,20 +158,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 60,
                 child: ElevatedButton(
                   child: Text('Sign Up'),
-                  onPressed: () {
-                    if (formkey.currentState != null) {
-                      if (formkey.currentState!.validate()) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Berhasil Sign Up')));
-                        Future.delayed(Duration(seconds: 1), () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (_) {
-                            return mainApp();
-                          }));
-                        });
-                      } else {
-                        print('ada inputan belum valid');
-                      }
+                  onPressed: () async {
+                    if(authServices.email != "" && authServices.password != ""){
+                      authServices.signUp(context);
                     }
                   },
                   style: ElevatedButton.styleFrom(
@@ -174,47 +181,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 }
 
-class formInput extends StatelessWidget {
-  final String textValue;
-  final bool obscureText;
-  final double marginTop;
-  final double marginButton;
-  final String? Function(String?)? checkValidator;
 
-  const formInput({
-    required this.textValue, 
-    required this.obscureText, 
-    required this.marginTop,
-    required this.marginButton,  
-    this.checkValidator,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: kDefaultPadding,
-      child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(top: marginTop, bottom: marginButton),
-        child: TextFormField(
-          key: GlobalKey<FormState>(),
-          controller: TextEditingController(),
-  
-          decoration: InputDecoration(
-            enabledBorder: ActiveOutLine,
-            focusedBorder: PressOutLine,
-            filled: true,
-            fillColor: Colors.white,
-            hintText: textValue,
-          ),
-          autofocus: false,
-          obscureText: obscureText,
-          validator: checkValidator,
-        )
-      ),
-      
-      
-    );
-  }
-  
-}
