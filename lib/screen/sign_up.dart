@@ -1,18 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:project/authServices.dart';
+import 'package:project/dbServices.dart';
 import 'package:project/settings.dart';
+import 'package:project/dataClass.dart';
+import 'package:project/dbServices.dart';
 
 
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+  
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final ctrlName = TextEditingController();
+  final ctrlNope = TextEditingController();
   var formkey = GlobalKey<FormState>();
   AuthServices authServices = AuthServices();
 
@@ -73,6 +80,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         margin: EdgeInsets.only(top: 0.0, bottom: 20.0),
                         child: TextFormField(
+                          controller: ctrlName,
+                          decoration: InputDecoration(
+                            enabledBorder: ActiveOutLine,
+                            focusedBorder: PressOutLine,
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Nama',
+                          ),
+                          autofocus: false,
+                          obscureText: false,
+                        )
+                      ),    
+                    ),
+
+                    Padding(
+                      padding: kDefaultPadding,
+                      child: Container(
+                        width: double.infinity,
+                        margin: EdgeInsets.only(top: 0.0, bottom: 20.0),
+                        child: TextFormField(
                           controller: authServices.email,
                           decoration: InputDecoration(
                             enabledBorder: ActiveOutLine,
@@ -93,6 +120,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         margin: EdgeInsets.only(top: 0.0, bottom: 20.0),
                         child: TextFormField(
+                          controller: ctrlNope,
                           decoration: InputDecoration(
                             enabledBorder: ActiveOutLine,
                             focusedBorder: PressOutLine,
@@ -125,25 +153,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         )
                       ),    
                     ),
-
-                    Padding(
-                      padding: kDefaultPadding,
-                      child: Container(
-                        width: double.infinity,
-                        margin: EdgeInsets.only(top: 0.0, bottom: 0.0),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            enabledBorder: ActiveOutLine,
-                            focusedBorder: PressOutLine,
-                            filled: true,
-                            fillColor: Colors.white,
-                            hintText: 'Masukkan Ulang Password',
-                          ),
-                          autofocus: false,
-                          obscureText: false,
-                        )
-                      ),    
-                    ),
                   ],
                 )
               ),
@@ -158,9 +167,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 60,
                 child: ElevatedButton(
                   child: Text('Sign Up'),
-                  onPressed: () async {
-                    if(authServices.email != "" && authServices.password != ""){
+                  onPressed: () {
+                    final dt = Users(name: ctrlName.text, mail: authServices.email.text, nope: ctrlNope.text);
+                    if(authServices.email != "" && authServices.password != "" && ctrlName != "" && ctrlNope != ""){
                       authServices.signUp(context);
+                      database.addData(users: dt);
                     }
                   },
                   style: ElevatedButton.styleFrom(

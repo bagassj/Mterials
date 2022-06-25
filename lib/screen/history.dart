@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:project/dbServices.dart';
 // import 'package:project/screen/home.dart';
 import 'package:project/settings.dart';
 
@@ -11,17 +13,6 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  // late int index;
-  // List showPage = [
-  //   HomeScreen()
-  // ];
-
-  // @override
-  // void initState() {
-  //   index = 0;
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -63,40 +54,49 @@ class _HistoryScreenState extends State<HistoryScreen> {
               ],
             ),
           ),
-          Wrap(
-            children: [
-              BoxCard(
-                'assets/Semen.png',
-                'Semen Tiga Roda',
-                'Stock 10',
-                '150.000',
-              ),
-              BoxCard(
-                'assets/Holcim.png',
-                'Semen Holcim',
-                'Stock 5',
-                '120.000',
-              ),
-              BoxCard(
-                'assets/Gresik.png',
-                'Semen Gresik',
-                'Stock 15',
-                '145.000',
-              ),
-              BoxCard(
-                'assets/Padang.png',
-                'Semen Padang',
-                'Stock 0',
-                '115.000',
-              ),
-            ],
-          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+                stream: database.getDataHistory(),
+                builder: (context, snapshot){
+                  if (snapshot.hasError){
+                    print('error');
+                  }
+                  else if(snapshot.hasData || snapshot.data != null){
+                    return ListView.separated(
+                      itemBuilder: (context, index) {
+                        DocumentSnapshot dsData = snapshot.data!.docs[index];
+                        String tanggal = dsData['date'];
+                        String nama = dsData['name'];
+                        String foto = dsData['img'];
+                        String harga = dsData['price'];
+                        String tersedia = dsData['stock'];
+
+                        return Center(
+                          child: BoxCard(
+                            tanggal,
+                            foto,
+                            nama,
+                            tersedia,
+                            harga,
+                          )
+                        );
+                      },
+                      separatorBuilder: (context, index) => SizedBox(height: 1,), 
+                      itemCount: snapshot.data!.docs.length
+                    );
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+            )
+          )
         ],
       ),
     );
   }
 
-  Container BoxCard(image, nama, stock, harga) {
+  Container BoxCard(date, image, nama, stock, harga) {
     return Container(
       height: 90,
       width: 340,
@@ -111,7 +111,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
             margin: EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
                 color: mGray, borderRadius: BorderRadius.circular(4)),
-            child: Image.asset(image),
+            child: Image.network(image),
           ),
           Container(
             height: 70,
@@ -166,7 +166,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   height: 25,
                   width: 80,
                   child: Text(
-                    '12 Juli 2021',
+                    date,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black12,

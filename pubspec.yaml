@@ -34,8 +34,13 @@ dependencies:
   dio: ^4.0.0
   flutter_polyline_points: ^0.2.6
   google_maps_flutter: ^2.0.2
+  geolocator: ^8.2.1
+  location: ^4.4.0
+  image_picker: ^0.8.5+3
+  geoflutterfire: ^3.0.3
   firebase_auth: ^3.3.19
-  cloud_firestore: ^3.1.17
+  firebase_storage: ^10.2.18
+  cloud_firestore: ^3.1.17  
 
 
   # The following adds the Cupertino Icons font to your application.

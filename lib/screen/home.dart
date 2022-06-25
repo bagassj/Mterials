@@ -1,10 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:project/dataClass.dart';
+import 'package:project/dbServices.dart';
 import 'package:project/settings.dart';
 import 'package:project/dialog/buyDialog.dart';
 import 'package:project/dialog/cartDialog.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -14,8 +15,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  CollectionReference items = FirebaseFirestore.instance.collection('items');
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -29,12 +28,35 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'GOOD MORNING, BAGAS',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 18),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'GOOD MORNING, ',
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 18),
+                      ),
+                      StreamBuilder<List<Users>>(
+                        stream: database.readData(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return Text("Ada Kesalahan! ${snapshot.hasError}");
+                          } else if (snapshot.hasData) {
+
+                            final datas = snapshot.data!;
+
+                            return Column(
+                              children: datas.map(buildData).toList(),
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator(),);
+                          }
+                        },
+                      )
+                    ],
                   ),
                   Text(
                     'I hope you enjoy the day',
@@ -68,18 +90,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             top: 30,
                             bottom: 10,
                           ),
-                          child:
-                              // StreamBuilder<QuerySnapshot>(
-                              //   stream: categories,
-                              //   builder: (BuildContext context,
-                              //       AsyncSnapshot<QuerySnapshot> snapshot) {
-                              //     if (snapshot.hasError) {
-                              //       return Text('Error');
-                              //     }
-                              //   },
-                              // ),
-                              DropdownSearch<String>(
-                            items: ["Semen", "Paku"],
+                          child: DropdownSearch<String>(
+                            items: ["All", "Semen", "Cat", "Kayu", 'Paku'],
                             mode: Mode.MENU,
                             onChanged: print,
                             selectedItem: "All",
@@ -112,86 +124,40 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
-                  // StreamBuilder<QuerySnapshot>(
-                  //   stream: items,
-                  //   builder: (BuildContext context,
-                  //       AsyncSnapshot<QuerySnapshot> snapshot) {
-                  //     if (snapshot.hasError) {
-                  //       return Text('Error');
-                  //     }
+                  Expanded(
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: database.getData(),
+                        builder: (context, snapshot){
+                          if (snapshot.hasError){
+                            print('error');
+                          }
+                          else if(snapshot.hasData || snapshot.data != null){
+                            return ListView.separated(
+                              itemBuilder: (context, index) {
+                                DocumentSnapshot dsData = snapshot.data!.docs[index];
+                                String nama = dsData['name'];
+                                String foto = dsData['img'];
+                                String harga = dsData['price'];
+                                String tersedia = dsData['stock'];
 
-                  //     final data = snapshot.requireData;
-
-                  //     return ListView.builder(
-                  //       itemCount: data.size,
-                  //       itemBuilder: (context, index) {
-                  //         return BoxCard(
-                  //           '${data.docs[index]['img']}',
-                  //           '${data.docs[index]['name']}',
-                  //           '${data.docs[index]['price']}',
-                  //           '${data.docs[index]['stock']}',
-                  //         );
-                  //       },
-                  //     );
-                  //   },
-                  // ),
-                  Wrap(
-                    alignment: WrapAlignment.center,
-                    children: [
-                      FutureBuilder<DocumentSnapshot>(
-                        future: items.doc().get(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<DocumentSnapshot> snapshot) {
-                          Map<String, dynamic> data =
-                              snapshot.data!.data() as Map<String, dynamic>;
-                          return BoxCard(
-                            '${data['img']}',
-                            '${data['name']}',
-                            '${data['price']}',
-                            '${data['stock']}',
+                                return Center(
+                                  child: BoxCard(
+                                    foto,
+                                    nama,
+                                    tersedia,
+                                    harga
+                                  )
+                                );
+                              },
+                              separatorBuilder: (context, index) => SizedBox(height: 1,), 
+                              itemCount: snapshot.data!.docs.length
+                            );
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                        // builder: (BuildContext context,
-                        //     AsyncSnapshot<QuerySnapshot> snapshot) {
-                        //   if (snapshot.hasError) {
-                        //     return Text('Error');
-                        //   }
-
-                        //   final data = snapshot.requireData;
-
-                        //   return ListView.builder(
-                        //     itemCount: data.size,
-                        //     itemBuilder: (context, index) {
-                        //       return BoxCard(
-                        //         '${data.docs[index]['img']}',
-                        //         '${data.docs[index]['name']}',
-                        //         '${data.docs[index]['price']}',
-                        //         '${data.docs[index]['stock']}',
-                        //       );
-                        //     },
-                        //   );
-                        // },
-                      ),
-                      // BoxCard(
-                      //   'assets/Holcim.png',
-                      //   'Semen Holcim',
-                      //   'Stock 5',
-                      //   '120.000',
-                      // ),
-                      // BoxCard(
-                      //   'assets/Gresik.png',
-                      //   'Semen Gresik',
-                      //   'Stock 15',
-                      //   '145.000',
-                      // ),
-                      // BoxCard(
-                      //   'assets/Padang.png',
-                      //   'Semen Padang',
-                      //   'Stock 0',
-                      //   '115.000',
-                      // ),
-                    ],
-                  ),
+                        }
+                    ))
                 ],
               ),
             ),
@@ -200,8 +166,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  
+  Widget buildData(Users data) => Text(
+    data.name,
+    style: TextStyle(
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontSize: 18),
+  );
 
-  Container BoxCard(image, nama, stock, harga) {
+  Container BoxCard(image, name, stock, price) {
     return Container(
       height: 90,
       width: 340,
@@ -216,7 +190,7 @@ class _HomeScreenState extends State<HomeScreen> {
             margin: EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
                 color: mGray, borderRadius: BorderRadius.circular(4)),
-            child: Image.asset(image),
+            child: Image.network(image),
           ),
           Container(
             height: 70,
@@ -228,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: EdgeInsets.only(left: 5),
                   child: Text(
-                    nama,
+                    name,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
@@ -249,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   margin: EdgeInsets.only(left: 5, top: 5),
                   child: Text(
-                    harga,
+                    price,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,

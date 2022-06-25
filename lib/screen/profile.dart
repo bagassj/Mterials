@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project/authServices.dart';
+import 'package:project/dataClass.dart';
+import 'package:project/dbServices.dart';
 import 'package:project/screen/editprofile.dart';
 import 'package:project/screen/address.dart';
 import 'package:project/settings.dart';
@@ -16,6 +20,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late String _imageUser;
+  User id = FirebaseAuth.instance.currentUser!;
+  late String uID = id.uid;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,65 +45,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 72,
-                      height: 72,
-                      // margin: EdgeInsets.all(100.0),
-                      decoration: BoxDecoration(
-                        color: mGray,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.add_a_photo,
-                        color: mBlue,
+                      height: double.infinity,
+                      width: 75,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 72,
+                            height: 72,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: mGray
+                            ),
+                            child: StreamBuilder<List<Images>>(
+                              stream: database.readDataPic(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasError) {
+                                  return Text("Ada Kesalahan! ${snapshot.hasError}");
+                                } else if (snapshot.hasData) {
+                                
+                                  final datas = snapshot.data!;
+
+                                  return Column(
+                                    children: datas.map(buildImage).toList(),
+                                  );
+                                } else {
+                                  return Center(child: CircularProgressIndicator(),);
+                                }
+                              },
+                            ),
+                          ),
+                        ],
+                      )
+                    ),
+                    SizedBox(width: 20),
+                    Container(
+                      width: 180,
+                      height: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          StreamBuilder<List<Users>>(
+                          stream: database.readData(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Text("Ada Kesalahan! ${snapshot.hasError}");
+                            } else if (snapshot.hasData) {
+
+                              final datas = snapshot.data!;
+
+                              return Column(
+                                children: datas.map(buildData).toList(),
+                              );
+                            } else {
+                              return Center(child: CircularProgressIndicator(),);
+                            }
+                          },
+                        )
+                        ],
                       ),
                     ),
                     SizedBox(width: 20),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            'Bintang Kunjung Wahyu',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 14,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '+6287472247247',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            '2024222020@mail.unej.ac.id',
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontFamily: 'Montserrat',
-                              fontWeight: FontWeight.w400,
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(width: 30),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -169,11 +180,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     onTap: () {
                       AuthServices authServices = AuthServices();
                       authServices.logOut(context);
-                      // Navigator.push(    
-                      //     context,
-                          
-                      //     MaterialPageRoute(
-                      //         builder: (context) => SignInScreen()));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -196,6 +202,64 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
     );
   }
+  
+  Widget buildImage(Images data) => Container(
+    width: 72,
+    height: 72,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      image: DecorationImage(
+        image: NetworkImage(data.imageUrl),
+        fit: BoxFit.cover
+      )
+    ),
+  );
+  
+  Widget buildData(Users data) => Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          data.name,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+            fontSize: 14,
+          ),
+        ),
+      ),
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          data.nope,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+            fontSize: 12,
+          ),
+        ),
+      ),
+      Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          data.mail,
+          textAlign: TextAlign.left,
+          style: TextStyle(
+            fontFamily: 'Montserrat',
+            fontWeight: FontWeight.w400,
+            color: Colors.white,
+            fontSize: 12,
+          ),
+        ),
+      ),
+    ],
+  );
 
   Container Menu(text) {
     text;
